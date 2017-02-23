@@ -4,18 +4,23 @@ This is a simple Oracle-XE image which is based on CentOS 7. It uses the standar
 
 ## Why an other image?
 I know there are already a plenty number of oracle-xe images. But:
+
 1. I didn't find one that was based on CentOS 7 (and was easy to build just using the provided rpm w/o additional 
 steps).
+
 2. Additional requirements, like creating users on startup
   
 ## Build this image
 As this image is based on the default Oracle RPM (which requires your approval before downloading it) you have to 
 build this image own your own and we can not push it to Dockerhub directly.
 
-But it's quite simple:
+But it's quite simple: 
+
 1. clone this repo
+
 2. download the `oracle-xe-11.2.0-1.0.x86_64.rpm.zip` fom the [OTN](http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html) and copy it to the rpm 
 directory of this repo
+
 3. build this image by invoking the Nashorn-Script (build.js) or just run
     
         docker build -t smaject/oracle-xe .
@@ -23,7 +28,9 @@ directory of this repo
 ### Build it on Windows/Mac (using boot2docker)
 In general the build-steps are the same, but you have to increase the swap-space of boot2docker before building the
  image (Thanks [@pmelopereira](https://github.com/pmelopereira) for the instructions!)
+ 
 1. Log into boot2docker / Docker Machine: `boot2docker ssh` or `docker-machine ssh default` (replace `default` if needed).
+
 2. Create a file named `bootlocal.sh` in `/var/lib/boot2docker/` with the following content:
 
         #!/bin/sh
@@ -32,6 +39,7 @@ In general the build-steps are the same, but you have to increase the swap-space
 
         dd if=/dev/zero of=$SWAPFILE bs=1024 count=2097152
         mkswap $SWAPFILE && chmod 600 $SWAPFILE && swapon $SWAPFILE
+
 
 3. Make this file executable: `chmod u+x /var/lib/boot2docker/bootlocal.sh`
 
