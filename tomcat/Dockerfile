@@ -1,7 +1,7 @@
 FROM smaject/java
 MAINTAINER Marc Pestel, smaject.de
 
-ENV VERSION 8.5.11
+ENV VERSION 8.5.13
 ENV INSTALL_DIR /opt
 ENV SERVER_HOME ${INSTALL_DIR}/apache-tomcat-${VERSION}
 
