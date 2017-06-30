@@ -17,9 +17,3 @@ specifying the '`-e`'-parameter when starting the image.
         ENV DB_HOST localhost
         ENV DB_PORT 5432
         ENV DATASOURCE_NAME smaject
-
-## Upload image to Gitlab
-
-        docker login registry.gitlab.com
-        docker build -t registry.gitlab.com/smaject/smart-base/wildfly-postgres .
-        docker push registry.gitlab.com/smaject/smart-base/wildfly-postgres
