@@ -2,12 +2,12 @@
 embed-server --std-out=echo --server-config=standalone.xml
 
 # Add postgres module
-module add --name=org.postgres --resources=/tmp/postgresql-${postgres.version}.jar --dependencies=javax.api,javax.transaction.api
+module add --name=org.postgres --resources=/tmp/postgresql-${env.POSTGRES_VERSION}.jar --dependencies=javax.api,javax.transaction.api
 
 # Add Postgres driver
 /subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
 
 # Add a datasource
-/subsystem=datasources/data-source=${postgres.datasource}/:add(connection-url=jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.dbname},driver-name=postgres,jndi-name=java:/jdbc/${postgres.datasource},initial-pool-size=4,max-pool-size=64,min-pool-size=4,password=${postgres.password},user-name=${postgres.user})
+/subsystem=datasources/data-source=${env.DATASOURCE_NAME}/:add(connection-url=jdbc:postgresql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME},driver-name=postgres,jndi-name=java:/jdbc/${env.DATASOURCE_NAME},initial-pool-size=4,max-pool-size=64,min-pool-size=4,password=${env.DB_PASSWORD},user-name=${env.DB_USER})
 
 stop-embedded-server
