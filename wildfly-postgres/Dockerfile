@@ -1,7 +1,7 @@
 FROM smaject/wildfly-stats
 MAINTAINER Marc Pestel, smaject.de
 
-ENV POSTGRES_VERSION 9.4.1212
+ENV POSTGRES_VERSION 42.2.1
 ENV DB_NAME smaject
 ENV DB_USER smaject
 ENV DB_PASSWORD secret

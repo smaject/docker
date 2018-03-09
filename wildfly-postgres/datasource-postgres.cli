@@ -1,13 +1,26 @@
 # Run the commands in an embedded server
-embed-server --std-out=echo --server-config=standalone.xml
+embed-server --std-out=echo --server-config=standalone-full.xml
 
 # Add postgres module
 module add --name=org.postgres --resources=/tmp/postgresql-${env.POSTGRES_VERSION}.jar --dependencies=javax.api,javax.transaction.api
 
 # Add Postgres driver
-/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgres,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
 
-# Add a datasource
-/subsystem=datasources/data-source=${env.DATASOURCE_NAME}/:add(connection-url=jdbc:postgresql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME},driver-name=postgres,jndi-name=java:/jdbc/${env.DATASOURCE_NAME},initial-pool-size=4,max-pool-size=64,min-pool-size=4,password=${env.DB_PASSWORD},user-name=${env.DB_USER})
+# Add xa datasource
+xa-data-source add \
+     --name=ApplicationXADS \
+     --driver-name=postgresql \
+     --jndi-name=java:/jdbc/${env.DATASOURCE_NAME} \
+     --user-name=${env.DB_USER} \
+     --password=${env.DB_PASSWORD} \
+     --use-ccm=false \
+     --max-pool-size=25 \
+     --blocking-timeout-wait-millis=5000 \
+     --new-connection-sql="set datestyle = ISO, European;"
+/subsystem=datasources/xa-data-source=ApplicationXADS/xa-datasource-properties=ServerName:add(value=${env.DB_HOST})
+/subsystem=datasources/xa-data-source=ApplicationXADS/xa-datasource-properties=PortNumber:add(value=${env.DB_PORT})
+/subsystem=datasources/xa-data-source=ApplicationXADS/xa-datasource-properties=DatabaseName:add(value=${env.DB_NAME})
+xa-data-source enable --name = ApplicationXADS
 
 stop-embedded-server

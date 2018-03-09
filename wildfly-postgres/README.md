@@ -11,6 +11,7 @@ Please, refer to the mentioned repositories for detailed information on how to u
 The image exposes the following environment variables (and their defaults). You can override the defaults by 
 specifying the '`-e`'-parameter when starting the image. 
 
+        ENV POSTGRES_VERSION 42.2.1
         ENV DB_NAME smaject
         ENV DB_USER smaject
         ENV DB_PASSWORD secret
