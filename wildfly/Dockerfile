@@ -15,7 +15,7 @@ RUN curl -O https://download.jboss.org/wildfly/${WILDFLY_VERSION}/wildfly-${WILD
     && rm wildfly-${WILDFLY_VERSION}.zip \
     && rm ${WILDFLY_HOME}/bin/standalone.conf \
     && chmod a+x ${WILDFLY_HOME}/bin/standalone.sh
-ADD standalone.conf ${WILDFLY_HOME}/bin/
+COPY standalone.conf ${WILDFLY_HOME}/bin/standalone.conf
 
 # Ensure signals are forwarded to the JVM process correctly for graceful shutdown
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
@@ -23,6 +23,6 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 # Add an admin user so we can access the console
 RUN ${WILDFLY_HOME}/bin/add-user.sh admin password --silent
 
-ENTRYPOINT ${WILDFLY_HOME}/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0
+ENTRYPOINT ${WILDFLY_HOME}/bin/standalone.sh -b=0.0.0.0 -bmanagement=0.0.0.0 -c standalone-full.xml
 
 EXPOSE 8080 9990

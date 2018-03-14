@@ -10,7 +10,7 @@ ENV DB_PORT 5432
 ENV DATASOURCE_NAME smaject
 
 # Add the jboss-cli commands for postgres
-ADD datasource-postgres.cli /tmp/datasource-postgres.cli
+COPY datasource-postgres.cli /tmp/datasource-postgres.cli
 
 # Download postgres, configure it, run jboss-cli, and clean-up
 RUN cd ${HOME} \
