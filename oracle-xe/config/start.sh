@@ -13,6 +13,13 @@ while true; do
         /etc/init.d/oracle-xe start
         echo "Database ready to use. Enjoy!"
 
+		# create schemas if specified (create poi schemas always)
+		if [ "$SCHEMAS" == "" ]; then
+			SCHEMAS="poi";
+		else
+		    SCHEMAS+=" poi";
+		fi
+
 		if [ "$SCHEMAS" == "" ]; then
 			echo "If you want to create some database schemas automatically specify SCHEMAS environment variable";
 		else
@@ -31,6 +38,20 @@ while true; do
 				fi
 			done
 		fi
+
+		#create poi_assist
+		echo "Init POI db-scripts..."
+		sqlplus -S poi/poi@localhost @/u01/app/oracle/product/11.2.0/xe/config/scripts/poi.assist.package.sql
+
+		# run the database init scripts
+		for f in ${DEPLOYMENT_DIR}/*; do
+              case "$f" in
+                *.sh)     echo "$0: running $f"; . "$f" ;;
+                *.sql)    echo "$0: running $f"; echo "exit" | sqlplus "SYS/oracle" AS SYSDBA @"$f"; echo ;;
+                *)        echo "$0: ignoring $f" ;;
+              esac
+              echo
+        done
     fi
     sleep 1m
 done;

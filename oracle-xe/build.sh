@@ -1,0 +1,1 @@
+#!/bin/bashdocker build -t smaject/oracle-xe .
