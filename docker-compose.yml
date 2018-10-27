@@ -1,0 +1,31 @@
+# Make it easy to regenerate all images
+
+version: "3"
+
+services:
+  java:
+    image: smaject/java:8
+    build:
+      context: java/java8
+  openjdk:
+    image: smaject/openjdk:11
+    build:
+      context: java/openjdk
+  wildfly:
+    image: smaject/wildfly:14
+    build:
+      context: wildfly
+    depends_on:
+      - java
+  wildfly-stats:
+    image: smaject/wildfly-stats:14
+    build:
+      context: wildfly-stats
+    depends_on:
+      - wildfly
+  wildfly-postgres:
+    image: smaject/wildfly-postgres:14
+    build:
+      context: wildfly-postgres
+    depends_on:
+      - wildfly-stats
