@@ -1,5 +1,5 @@
 # Baseimage for Java
-The image is based on Centos 7 and provides the latest OpenJdk 9
+The image is based on Centos 7 and provides the latest OpenJdk 11
 
 ## Build the image 
 - Make the build.sh runable and execute it
