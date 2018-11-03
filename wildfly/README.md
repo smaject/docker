@@ -1,6 +1,10 @@
 # WildFly Docker image
 Dockerfile to setup a container running [WildFly application server](http://wildfly.org/).
 
+**Important:** the `adjustConfiguration.cli` file provided with this repo includes some configuration examples on how to 
+configure a additionally log-category and how to adjust some thread-pool settings. Adapt this to your needs before using 
+the container.
+
 ## Usage
 To boot in standalone mode and expose the default 8080 application port:
 

@@ -2,4 +2,4 @@
 
 echo "Create Wildfly base docker image"
 
-docker build -t smaject/wildfly .
+docker build -t smaject/wildfly:14 .

@@ -1,2 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 /oracle-xe/rpm/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+
+.idea/
+*.iml

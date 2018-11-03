@@ -1,0 +1,21 @@
+# Run the commands in an embedded server
+embed-server --std-out=echo --server-config=standalone-full.xml
+
+# Add logger for ${env.ROOT_LOG_PATH}
+/subsystem=logging/logger=${env.ROOT_LOG_PATH}:add
+/subsystem=logging/logger=${env.ROOT_LOG_PATH}:write-attribute(name="level", value="ALL")
+/subsystem=logging/logger=${env.ROOT_LOG_PATH}:write-attribute(name="use-parent-handlers", value="true")
+
+# The Debug-level is controlled by the corresponding Logger
+/subsystem=logging/console-handler=CONSOLE:write-attribute(name=level,value=${env.LOG_LEVEL})
+/subsystem=logging/periodic-rotating-file-handler=FILE:write-attribute(name=level,value=${env.LOG_LEVEL})
+
+# configure thread pools
+# core-treads is mandatory!!
+/subsystem=ee/managed-executor-service=default:write-attribute(name=core-threads,value=${env.EXECUTOR_THREADS})
+/subsystem=ee/managed-scheduled-executor-service=default:write-attribute(name=core-threads,value=${env.EXECUTOR_THREADS})
+/subsystem=ee/managed-thread-factory=default:write-attribute(name=priority,value=1)
+
+/subsystem=ejb3/thread-pool=default:write-attribute(name=max-threads,value=${env.EJB_THREADS})
+
+stop-embedded-server
