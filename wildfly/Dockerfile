@@ -1,12 +1,12 @@
-FROM smaject/java:8
+FROM smaject/openjdk:11
 MAINTAINER Marc Pestel, smaject.de
 
-# docker build -t smaject/wildfly:14 .
+# docker build -t smaject/wildfly:16 .
 
 ARG ADMIN_USER=admin
 ARG ADMIN_PWD=password
 
-ENV WILDFLY_VERSION 14.0.1.Final
+ENV WILDFLY_VERSION 16.0.0.Final
 ENV INSTALL_DIR /opt
 ENV WILDFLY_HOME ${INSTALL_DIR}/wildfly-${WILDFLY_VERSION}
 

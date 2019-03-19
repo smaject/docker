@@ -1,7 +1,7 @@
-FROM smaject/wildfly-stats:14
+FROM smaject/wildfly-stats:16
 MAINTAINER Marc Pestel, smaject.de
 
-# docker build -t smaject/wildfly-postgres:14 .
+# docker build -t smaject/wildfly-postgres:16 .
 
 ENV POSTGRES_VERSION 42.2.5
 ENV DB_NAME smaject
